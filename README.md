@@ -174,7 +174,7 @@ Esto se hace por unica vez y crea todas las carpetas necesarias para trabajar.
 
 **Paso 6. (Ejemplo)**
 
-Creo una clase la cual luego va a ser importada.
+Creo una clase la cual luego va a ser importada y queda definida como una tabla de la base de datos.
 
 ```python 
 class Pais(db.Model):
@@ -231,3 +231,71 @@ from flask import (
     url_for,
 )
 ```
+
+**Paso 2 - Ejemplo**
+### Carga de datos
+
+Creo en el archivo *app.py* la ruta a la cual van a ir los datos cargados y le asigno el metodo por el cual va a recibir los datos. 
+
+```python 
+@app.route("/agregar_pais", methods=["POST"])
+def nuevo_pais():
+    if request.method=="POST":
+        nombre_pais = request.form["nombre"]
+
+        # Inicializo el objeto. 
+        nuevo_pais = Pais(nombre=nombre_pais)
+        
+        # Preparo el objeto para enviarlo a la base de datos. Hago la conexion a la base de datos. Alchemy detecta que es un objeto Pais, entonces ya sabe que tiene que mandarlo a la base de datos en la tabla "PAIS".
+        db.session.add(nuevo_pais)
+
+        # Envio el objeto y queda almacenado
+        db.session.commit()
+
+        # Esto es para que vuelva a la pagina de inicio una vez que se cargo el objeto.
+        return redirect(url_for("index"))
+```
+
+**Paso 3**
+
+Defindo en algun template un formulario, que es la herramienta del front que se va a usar para mandar los datos al back.
+
+```html
+<form action="/agregar_pais" method="POST">
+    <input type="text" name="nombre">
+    <button type="submit">Guardar</button>
+</form>
+```
+En este caso:
+
+*action* : Marca la ruta a la cual se van a enviar los datos, que es la ruta definida en el paso 2.
+
+*method*: Es el metodo seleccionado para hacerlo, el cual tambien tiene que ser coincidente con el metodo definido en paso 2 para recibir.
+
+*button type*: Debe ser *submit* para poder enviar los datos.
+
+*name*: es el nombre del formulario, que es la identificacion que va a usar el *request* para acceder.
+
+**Paso 4 - Ejemplo**
+### Eliminacion de datos
+
+```python 
+@app.route("/borrar_pais/<id>")
+def borrar_pais(id):
+    # Obtengo el pais que quiero eliminar.
+    pais= Pais.query.get(id) 
+
+    # Elimino.
+    db.session.delete(pais)
+
+    # Guardo los datos
+    db.session.commit()
+
+    return redirect(url_for("index"))
+```
+
+En este caso:
+
+Como parametro de *app.route* no solo mando la direccion a la cual se dirige, sino que tambien le paso una variable que es la *id* de lo que quiero eliminar de la base de dato.
+ 
+ Hace la eliminacion y vuelve a la pagina de inicio.
