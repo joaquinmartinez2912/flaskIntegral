@@ -1,10 +1,10 @@
 # flaskIntegral
 Trabajo integral de flask - PPI ITEC 2023.
 ## Tabla de contenidos
-- [Entorno Virtual e Inicio](#Entorno-Virtual-e-Inicio)
-- [Templates](#Templates)
-- [Migraciones](#Migraciones)
-- [Manejo de datos](#Manejo-de-datos)
+- [Entorno Virtual e Inicio](#entorno-Virtual-e-Inicio)
+- [Templates](#templates)
+- [Migraciones](#migraciones)
+- [Manejo de datos](#manejo-de-datos)
 
 
 ## *Entorno Virtual e Inicio*
