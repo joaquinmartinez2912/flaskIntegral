@@ -8,18 +8,6 @@ Principal
 
 {% block body %} 
 
-<div class="container-fluid">
-    <div class="row">
-        <!-- Barra lateral con lista de nombres como botones -->
-        <div class="col-md-3 bg-light sidebar">
-            <h3>Temas de interes</h3>
-            <ul class="list-group">
-                <li class="list-group-item"><a href="#comentario1" class="btn btn-link">Futbol</a></li>
-                <li class="list-group-item"><a href="#comentario2" class="btn btn-link">Basquet</a></li>
-                <li class="list-group-item"><a href="#comentario3" class="btn btn-link">Tenis</a></li>
-                <!-- Agrega más nombres según sea necesario -->
-            </ul>
-        </div>
         <!-- Sección principal -->
         <div class="col-md-9">
             <!-- Caja de texto con lista desplegable para temas -->
@@ -29,10 +17,9 @@ Principal
                     <div class="form-group">
                         <select class="form-control" id="topicSelect">
                             <option value="">Selecciona un tema</option>
-                            <option value="Tema 1">Tema 1</option>
-                            <option value="Tema 2">Tema 2</option>
-                            <option value="Tema 3">Tema 3</option>
-                            <!-- Agrega más temas según sea necesario -->
+                            {% for categoria in listaCategorias %} 
+                            <option value="{{categoria.nombre}}">{{categoria.nombre}}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="form-group">
@@ -52,7 +39,5 @@ Principal
                 </ul>
             </div>
         </div>
-    </div>
-</div>
 
 {% endblock %}
