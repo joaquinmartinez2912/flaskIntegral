@@ -2,12 +2,57 @@
 
 {% block title %} 
 
-Inicio
+Principal
 
 {% endblock %}
 
 {% block body %} 
 
-
+<div class="container-fluid">
+    <div class="row">
+        <!-- Barra lateral con lista de nombres como botones -->
+        <div class="col-md-3 bg-light sidebar">
+            <h3>Temas de interes</h3>
+            <ul class="list-group">
+                <li class="list-group-item"><a href="#comentario1" class="btn btn-link">Futbol</a></li>
+                <li class="list-group-item"><a href="#comentario2" class="btn btn-link">Basquet</a></li>
+                <li class="list-group-item"><a href="#comentario3" class="btn btn-link">Tenis</a></li>
+                <!-- Agrega más nombres según sea necesario -->
+            </ul>
+        </div>
+        <!-- Sección principal -->
+        <div class="col-md-9">
+            <!-- Caja de texto con lista desplegable para temas -->
+            <div class="mt-4">
+                <h4>Escribe un comentario:</h4>
+                <form id="commentForm">
+                    <div class="form-group">
+                        <select class="form-control" id="topicSelect">
+                            <option value="">Selecciona un tema</option>
+                            <option value="Tema 1">Tema 1</option>
+                            <option value="Tema 2">Tema 2</option>
+                            <option value="Tema 3">Tema 3</option>
+                            <!-- Agrega más temas según sea necesario -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" rows="4" id="commentInput" placeholder="Hace tu posteo"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar Comentario</button>
+                </form>
+            </div>
+            <!-- Lista de comentarios escritos -->
+            <div class="mt-4">
+                <h4>Posteos:</h4>
+                <ul class="list-group" id="commentList">
+                    {% for post in posteos %}
+                        <!-- <li> {{post.texto}} </li> -->
+                        <!-- <a href="/principal/{{post.id}}/comentarios" class="btn btn-info p-2 m-1"> Ingresar </a> -->
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
