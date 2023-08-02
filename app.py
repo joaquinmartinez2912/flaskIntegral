@@ -35,6 +35,8 @@ def index():
 
 @app.route("/principal")
 def main():
+    # posteos = levanto los posteos de la base de datos.
+    # Lo paso como parametro en el render_template
     return render_template("main.html")
 
 @app.route("/usuarios")
