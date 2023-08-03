@@ -10,7 +10,7 @@ from sqlalchemy import ForeignKey
 app = Flask(__name__)
 
 #mysql+pymysql://usuario:contraseña@ip/nombre_db
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:@localhost/miniblog"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://BD2021:BD2021itec@143.198.156.171/db_joaquinppp"
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -54,6 +54,7 @@ class Entrada(db.Model):
 
     def __str__(self):
         return self.titulo
+
 
 class Comentarios(db.Model):
     __tablename__ = "comentario"
