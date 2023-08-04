@@ -123,13 +123,25 @@ def agregarUsuario():
 def agregarPost():
     if request.method == "POST":
         fechaPost = request.form["fecha"]
+        tituloPost = request.form["titulo"]
         textoPost = request.form["texto"]
         etiquetaPost = request.form["categ"]
         usuarioId = request.form["idUsuario"]
 
+        # Usuario para cuando recargue la pagina.
         usActivo = db.session.query(Usuario).filter_by(id=usuarioId).first()
         
-        print(fechaPost, textoPost, etiquetaPost, usuarioId)
+        #Id para carga de base de datos.
+        cat = db.session.query(Categorias).all()
+        etiquetaId = ""
+        for cate in cat:
+            if cate.nombre == etiquetaPost:
+                etiquetaId = cate.id
+        
+        nuevoPost = Entrada(titulo=tituloPost, contenido=textoPost, fecha=fechaPost, autor=usuarioId, etiqueta=etiquetaId )
+        db.session.add(nuevoPost)
+        db.session.commit()
+        
         return render_template("main.html", UsAct = usActivo)
 
         

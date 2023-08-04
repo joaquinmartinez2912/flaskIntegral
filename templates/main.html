@@ -19,6 +19,9 @@ Principal
                         <textarea class="form-control" rows="1" id="commentInput" name="fecha" placeholder="Fecha"></textarea>
                     </div>
                     <div class="form-group">
+                        <textarea class="form-control" rows="1" id="commentInput" name="titulo" placeholder="Titulo"></textarea>
+                    </div>
+                    <div class="form-group">
                         <select class="form-control" id="topicSelect" name="categ">
                             {% for categoria in listaCategorias %} 
                             <option value="{{categoria.nombre}}">{{categoria.nombre}}</option>
@@ -30,17 +33,15 @@ Principal
                     </div>
                     <input type="hidden" name="idUsuario" value= "{{UsAct.id}}">
                     <button type="submit" class="btn btn-primary">Enviar Comentario</button>
+
                 </form>
             </div>
             <!-- Lista de comentarios escritos -->
             <div class="mt-4">
+
                 <h4>Posteos:</h4>
-                <ul class="list-group" id="commentList">
-                    {% for post in posteos %}
-                        <!-- <li> {{post.texto}} </li> -->
-                        <!-- <a href="/principal/{{post.id}}/comentarios" class="btn btn-info p-2 m-1"> Ingresar </a> -->
-                    {% endfor %}
-                </ul>
+
+               
             </div>
         </div>
 
