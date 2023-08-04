@@ -78,7 +78,8 @@ class Comentarios(db.Model):
 
 @app.context_processor
 def inject_paises():
-    cat = db.session.query(Categorias).all()   
+    cat = db.session.query(Categorias).all()
+    
     return dict(
         listaCategorias=cat
     )
@@ -88,11 +89,17 @@ def inject_paises():
 def index():
     return render_template("index.html")
 
-@app.route("/principal")
+@app.route("/principal",methods=["GET", "POST"])
 def main():
-    # posteos = levanto los posteos de la base de datos.
-    # Lo paso como parametro en el render_template
-    return render_template("main.html")
+    if request.method == "POST":
+        nombreCargado = request.form["usuarioActivo"]
+        # uso la funcion filter_by porque con get solo puedo buscar por PK que es el id.
+        usActivo = db.session.query(Usuario).filter_by(nombre=nombreCargado).first()
+
+        # posteos = levanto los posteos de la base de datos.
+        # Lo paso como parametro en el render_template
+        return render_template("main.html", UsAct = usActivo)
+
 
 @app.route("/usuarios")
 def user():
@@ -112,3 +119,17 @@ def agregarUsuario():
         return redirect(url_for("index"))
 
 
+@app.route("/agregarPosteo", methods=["GET", "POST"])
+def agregarPost():
+    if request.method == "POST":
+        fechaPost = request.form["fecha"]
+        textoPost = request.form["texto"]
+        etiquetaPost = request.form["categ"]
+        usuarioId = request.form["idUsuario"]
+
+        usActivo = db.session.query(Usuario).filter_by(id=usuarioId).first()
+        
+        print(fechaPost, textoPost, etiquetaPost, usuarioId)
+        return render_template("main.html", UsAct = usActivo)
+
+        
