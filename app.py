@@ -105,15 +105,15 @@ def main():
 @app.route("/comentarios",methods=["POST"])
 def comentarios():
     if request.method == "POST":
-        fechaEntrada = request.form["fechaEnt"]
-        autorEntrada = request.form["autorEnt"]
-        tituloEntrada = request.form["tituloEnt"]
-        etiquetaEntrada = request.form["etiquetaEnt"]
-        contenidoEntrada = request.form["contenidoEnt"]
+        entradaId = request.form["identrada"]
+       
+        entradas = db.session.query(Entrada).all()
+        objetoEntrada = ""
+        for entrada in entradas:
+            if int(entrada.id) == int(entradaId):
+                objetoEntrada = entrada
 
-        print(fechaEntrada,autorEntrada, tituloEntrada, etiquetaEntrada,contenidoEntrada)
-
-        return render_template("comentarios.html")
+        return render_template("comentarios.html", enActiva = objetoEntrada )
        
 
 

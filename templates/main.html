@@ -40,12 +40,12 @@ Principal
             <div class="mt-4">
                 <h4>Posteos:</h4>
                 {% for ent in listaEntradas %} 
-
                 <form action="/comentarios" method="post">
+                    <input type="hidden" name="identrada" value= "{{ent.id}}">
                     <div class="container-fluid border border-success p-2 mb-2">
                         <div class="row">
                             <div class="col-3">
-                                <input type="hidden" class="font-weight-bold" name="fechaEnt">{{ent.fecha}}</input>
+                                <p class="font-weight-bold">{{ent.fecha}}</p>
                             </div>
                             <div class="col-3">
                                 {% for usu in listaUsuarios %}
@@ -53,12 +53,12 @@ Principal
                                 {% set entradaId = ent.autor %}
                                 {% if usuarioId == entradaId %}
                                     {% set autorNombre = usu.nombre %}
-                                    <input type="hidden" class="font-weight-bold" name="autorEnt">{{autorNombre}}</input>
+                                    <p class="font-weight-bold" >{{autorNombre}}</p>
                                 {% endif %}
                             {% endfor %}        
                             </div>
                             <div class="col-3">
-                                <input type="hidden" class="font-weight-bold" name="tituloEnt">{{ent.titulo}}</input>
+                                <p class="font-weight-bold">{{ent.titulo}}</p>
                             </div>
                             <div class="col-3">
                                 {% for cat in listaCategorias %}
@@ -66,14 +66,14 @@ Principal
                                 {% set entradaId = ent.etiqueta %}
                                 {% if catId == entradaId %}
                                     {% set etiNombre = cat.nombre %}
-                                    <input type="hidden" class="font-weight-bold" name="etiquetaEnt">{{etiNombre}}</input>
+                                    <p class="font-weight-bold">{{etiNombre}}</p>
                                 {% endif %}
                             {% endfor %}     
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <input type="hidden" class="font-italic" name="contenidoEnt" >{{ent.contenido}}</input>
+                                <p class="font-italic">{{ent.contenido}}</p>
                             </div>
                         </div>
                         <div class="row justify-content-end">
