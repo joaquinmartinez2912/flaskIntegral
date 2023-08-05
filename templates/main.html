@@ -11,9 +11,10 @@ Principal
         <!-- Sección principal -->
         <div class="col-md-9">
             <!-- Caja de texto con lista desplegable para temas -->
+            <a href="/" class="btn btn-success btn-block">Cerrar Sesion</a>
             <h2>Usuario: {{UsAct.nombre}}</h1>
             <div class="mt-4">
-                <h4>Escribe un comentario:</h4>
+                <h4>Escribi un Post:</h4>
                 <form action="/agregarPosteo" method="post">
                     <div class="form-group">
                         <textarea class="form-control" rows="1" id="commentInput" name="fecha" placeholder="Fecha"></textarea>
@@ -36,12 +37,14 @@ Principal
 
                 </form>
             </div>
-            <!-- Lista de comentarios escritos -->
+                
+            <!-- Lista de posteos -->
             <div class="mt-4">
                 <h4>Posteos:</h4>
                 {% for ent in listaEntradas %} 
                 <form action="/comentarios" method="post">
                     <input type="hidden" name="identrada" value= "{{ent.id}}">
+                    <input type="hidden" name="usuarioActivo" value= "{{UsAct.id}}">
                     <div class="container-fluid border border-success p-2 mb-2">
                         <div class="row">
                             <div class="col-3">

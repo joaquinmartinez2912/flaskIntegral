@@ -81,16 +81,19 @@ def inject_paises():
     cat = db.session.query(Categorias).all()
     ent = db.session.query(Entrada).all()
     usu = db.session.query(Usuario).all()
+    coments = db.session.query(Comentarios).all()
     return dict(
         listaCategorias=cat,
         listaEntradas=ent,
-        listaUsuarios=usu
+        listaUsuarios=usu,
+        listaComentarios=coments
     )
 
 
 @app.route('/')
 def index():
     return render_template("index.html")
+
 
 @app.route("/principal",methods=["GET", "POST"])
 def main():
@@ -102,24 +105,28 @@ def main():
         # Lo paso como parametro en el render_template
         return render_template("main.html", UsAct = usActivo)
 
+
 @app.route("/comentarios",methods=["POST"])
 def comentarios():
     if request.method == "POST":
         entradaId = request.form["identrada"]
+        usActivoid = request.form["usuarioActivo"]
        
+        usActivo = db.session.query(Usuario).filter_by(id=usActivoid).first()
+
         entradas = db.session.query(Entrada).all()
         objetoEntrada = ""
         for entrada in entradas:
             if int(entrada.id) == int(entradaId):
                 objetoEntrada = entrada
 
-        return render_template("comentarios.html", enActiva = objetoEntrada )
+        return render_template("comentarios.html", enActiva = objetoEntrada, UsAct = usActivo )
        
-
 
 @app.route("/usuarios")
 def user():
     return render_template("users.html")
+
 
 @app.route("/agregarUsuario",methods=["POST"])
 def agregarUsuario():
@@ -160,4 +167,28 @@ def agregarPost():
         
         return render_template("main.html", UsAct = usActivo)
 
+
+@app.route("/agregarComentario", methods=["GET", "POST"])
+def agregarComentario():
+    if request.method == "POST":
+        fechaComent = request.form["fecha"]
+        textoComent = request.form["texto"]
+        usuarioId = request.form["idUsuario"]
+        entradaId = request.form["idEntrada"]
+
+        # entrada para cuando recargue la pagina.
+        objetoEntrada = db.session.query(Entrada).filter_by(id=entradaId).first()
+
+        #Id para carga de base de datos.
+        usuBase = db.session.query(Usuario).all()
+        usuNombre = ""
+        for usuario in usuBase:
+            if usuario.id == int(usuarioId):
+                usActivo = usuario
+        
+        nuevoComent = Comentarios(contenido=textoComent, fecha=fechaComent, autor=usuarioId, etiqueta=entradaId )
+        db.session.add(nuevoComent)
+        db.session.commit()
+        
+        return render_template("comentarios.html",enActiva = objetoEntrada, UsAct = usActivo)
         
