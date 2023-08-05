@@ -79,9 +79,12 @@ class Comentarios(db.Model):
 @app.context_processor
 def inject_paises():
     cat = db.session.query(Categorias).all()
-    
+    ent = db.session.query(Entrada).all()
+    usu = db.session.query(Usuario).all()
     return dict(
-        listaCategorias=cat
+        listaCategorias=cat,
+        listaEntradas=ent,
+        listaUsuarios=usu
     )
 
 
@@ -96,9 +99,22 @@ def main():
         # uso la funcion filter_by porque con get solo puedo buscar por PK que es el id.
         usActivo = db.session.query(Usuario).filter_by(nombre=nombreCargado).first()
 
-        # posteos = levanto los posteos de la base de datos.
         # Lo paso como parametro en el render_template
         return render_template("main.html", UsAct = usActivo)
+
+@app.route("/comentarios",methods=["POST"])
+def comentarios():
+    if request.method == "POST":
+        fechaEntrada = request.form["fechaEnt"]
+        autorEntrada = request.form["autorEnt"]
+        tituloEntrada = request.form["tituloEnt"]
+        etiquetaEntrada = request.form["etiquetaEnt"]
+        contenidoEntrada = request.form["contenidoEnt"]
+
+        print(fechaEntrada,autorEntrada, tituloEntrada, etiquetaEntrada,contenidoEntrada)
+
+        return render_template("comentarios.html")
+       
 
 
 @app.route("/usuarios")

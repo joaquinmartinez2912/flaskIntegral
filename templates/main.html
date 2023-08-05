@@ -38,10 +38,53 @@ Principal
             </div>
             <!-- Lista de comentarios escritos -->
             <div class="mt-4">
-
                 <h4>Posteos:</h4>
+                {% for ent in listaEntradas %} 
 
-               
+                <form action="/comentarios" method="post">
+                    <div class="container-fluid border border-success p-2 mb-2">
+                        <div class="row">
+                            <div class="col-3">
+                                <input type="hidden" class="font-weight-bold" name="fechaEnt">{{ent.fecha}}</input>
+                            </div>
+                            <div class="col-3">
+                                {% for usu in listaUsuarios %}
+                                {% set usuarioId = usu.id %}
+                                {% set entradaId = ent.autor %}
+                                {% if usuarioId == entradaId %}
+                                    {% set autorNombre = usu.nombre %}
+                                    <input type="hidden" class="font-weight-bold" name="autorEnt">{{autorNombre}}</input>
+                                {% endif %}
+                            {% endfor %}        
+                            </div>
+                            <div class="col-3">
+                                <input type="hidden" class="font-weight-bold" name="tituloEnt">{{ent.titulo}}</input>
+                            </div>
+                            <div class="col-3">
+                                {% for cat in listaCategorias %}
+                                {% set catId = cat.id %}
+                                {% set entradaId = ent.etiqueta %}
+                                {% if catId == entradaId %}
+                                    {% set etiNombre = cat.nombre %}
+                                    <input type="hidden" class="font-weight-bold" name="etiquetaEnt">{{etiNombre}}</input>
+                                {% endif %}
+                            {% endfor %}     
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="hidden" class="font-italic" name="contenidoEnt" >{{ent.contenido}}</input>
+                            </div>
+                        </div>
+                        <div class="row justify-content-end">
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-success">Ingresar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                
+                {% endfor %}
             </div>
         </div>
 
